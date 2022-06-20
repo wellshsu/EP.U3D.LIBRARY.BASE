@@ -30,6 +30,7 @@ namespace EP.U3D.LIBRARY.BASE
 
         #region Target
         [SerializeField] public string Name = string.Empty;
+        [NonSerialized] public string Path = string.Empty;
         #endregion
 
         #region Editor
