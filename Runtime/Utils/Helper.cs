@@ -564,23 +564,6 @@ namespace EP.U3D.LIBRARY.BASE
             }
         }
 
-        public static void ReleaseMemory(bool mono, bool ilr, bool resource)
-        {
-            if (mono)
-            {
-                GC.Collect();
-            }
-            if (ilr)
-            {
-                // TODO
-                //LuaManager.GC();
-            }
-            if (resource)
-            {
-                Resources.UnloadUnusedAssets();
-            }
-        }
-
         public static bool IsPadDevice()
         {
 #if UNITY_EDITOR
