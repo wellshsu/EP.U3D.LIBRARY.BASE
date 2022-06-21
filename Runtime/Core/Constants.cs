@@ -21,6 +21,8 @@ namespace EP.U3D.LIBRARY.BASE
 
         public static string PLAT_STEAMING_FILE = STREAMING_PATH + "PLAT.txt";
 
+        public static string UPDATER_PREFAB_PATH = "Resources/Bundle/Updater";
+
         public static string PROJ_NAME = "EFrame";
 
         public static string APP_NAME = "EFrame";
@@ -307,6 +309,10 @@ namespace EP.U3D.LIBRARY.BASE
         public static string REMOTE_LUA_BUNDLE_PATH; // 远端LUA脚本目录
 
         public static string REMOTE_FILE_BUNDLE_ROOT; // 远端文件根目录
+
+        public static string AUDIO_CONTROLLER_PREFAB = "RawAssets/Bundle/Prefab/Audio/AudioController.prefab";
+
+        public static string UI_PREFAB_PATH = "RawAssets/Bundle/Prefab/UI/";
 
         public static string DEVICE_ID { get { return SystemInfo.deviceUniqueIdentifier; } }
 
