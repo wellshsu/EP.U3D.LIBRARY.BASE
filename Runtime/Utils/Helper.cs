@@ -12,8 +12,6 @@ using System.IO;
 using System.Text;
 using System.Security.Cryptography;
 using UnityEngine;
-using ZXing;
-using ZXing.QrCode;
 using System.Runtime.InteropServices;
 
 namespace EP.U3D.LIBRARY.BASE
@@ -564,48 +562,6 @@ namespace EP.U3D.LIBRARY.BASE
             }
         }
 
-        public static bool IsPadDevice()
-        {
-#if UNITY_EDITOR
-            return true;
-#elif UNITY_ANDROID
-            float physicscreen = Mathf.Sqrt(Screen.width * Screen.width + Screen.height * Screen.height) / Screen.dpi;  
-            if (physicscreen >= 7f)  
-            {  
-               return true;
-            }  
-            else  
-            {  
-               return false;
-            }  
-#elif UNITY_IOS
-            string generation = UnityEngine.iOS.Device.generation.ToString();
-            if (generation.StartsWith("iPa"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-#else
-            return false;
-#endif
-        }
-
-        public static bool IsLandScape()
-        {
-            //if (Application.isMobilePlatform)
-            //{
-            //    return Screen.orientation == ScreenOrientation.Landscape || Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight;
-            //}
-            //else
-            //{
-            //    return Screen.width > Screen.height;
-            //}
-            return true;
-        }
-
         public static int GenLayerMask(params string[] layers)
         {
             int mask = 0;
@@ -614,32 +570,6 @@ namespace EP.U3D.LIBRARY.BASE
                 mask |= 1 << LayerMask.NameToLayer(layers[i]);
             }
             return mask;
-        }
-
-        public static Texture2D GenQRCode(string content, int width, int height)
-        {
-            try
-            {
-                var writer = new BarcodeWriter
-                {
-                    Format = BarcodeFormat.QR_CODE,
-                    Options = new QrCodeEncodingOptions
-                    {
-                        Height = height,
-                        Width = width
-                    }
-                };
-                var color32 = writer.Write(content);
-                Texture2D qrcode = new Texture2D(height, width);
-                qrcode.SetPixels32(color32);
-                qrcode.Apply();
-                return qrcode;
-            }
-            catch (Exception e)
-            {
-                LogError("Helper.GenQRCode: error: {0}.", e.Message);
-                return null;
-            }
         }
 
         public static long ToTimestamp(DateTime time)
