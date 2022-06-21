@@ -310,7 +310,7 @@ namespace EP.U3D.LIBRARY.BASE
 
         public static string REMOTE_FILE_BUNDLE_ROOT; // 远端文件根目录
 
-        public static string AUDIO_CONTROLLER_PREFAB = "RawAssets/Bundle/Prefab/Audio/AudioController.prefab";
+        public static string AUDIO_CONTROLLER_PREFAB = "RawAssets/Bundle/Prefab/Audio/AudioController";
 
         public static string UI_PREFAB_PATH = "RawAssets/Bundle/Prefab/UI/";
 
