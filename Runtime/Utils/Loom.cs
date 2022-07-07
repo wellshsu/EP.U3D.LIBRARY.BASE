@@ -58,19 +58,19 @@ namespace EP.U3D.LIBRARY.BASE
 
         public static Coroutine StartCR(IEnumerator cr)
         {
-            return Instance.StartCoroutine(cr);
+            return Instance?.StartCoroutine(cr);
         }
 
         public static void StopCR(Coroutine cr_ret)
         {
-            Instance.StopCoroutine(cr_ret);
+            Instance?.StopCoroutine(cr_ret);
         }
 
         public static bool IsInMainThread() { return Thread.CurrentThread.ManagedThreadId == mainThreadID; }
 
         public static void QueueInMainThread(Action action)
         {
-            Instance.actions.Enqueue(action);
+            Instance?.actions.Enqueue(action);
         }
 
         public static Thread RunAsync(Action action)
