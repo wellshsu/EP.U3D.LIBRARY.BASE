@@ -46,35 +46,44 @@ namespace EP.U3D.LIBRARY.BASE
             Instance = null;
         }
 
-        public static void Initialize(Transform root)
+        public static void Initialize(Transform root = null)
         {
             if (Instance == null)
             {
                 var go = new GameObject("Loom");
                 if (root) go.transform.SetParent(root);
                 go.AddComponent<Loom>();
+                DontDestroyOnLoad(go);
             }
         }
 
         public static Coroutine StartCR(IEnumerator cr)
         {
-            return Instance?.StartCoroutine(cr);
+            if (Instance == null) Initialize();
+            return Instance.StartCoroutine(cr);
         }
 
         public static void StopCR(Coroutine cr_ret)
         {
-            Instance?.StopCoroutine(cr_ret);
+            if (Instance == null) Initialize();
+            Instance.StopCoroutine(cr_ret);
         }
 
-        public static bool IsInMainThread() { return Thread.CurrentThread.ManagedThreadId == mainThreadID; }
+        public static bool IsInMainThread()
+        {
+            if (Instance == null) Initialize();
+            return Thread.CurrentThread.ManagedThreadId == mainThreadID;
+        }
 
         public static void QueueInMainThread(Action action)
         {
-            Instance?.actions.Enqueue(action);
+            if (Instance == null) Initialize();
+            Instance.actions.Enqueue(action);
         }
 
         public static Thread RunAsync(Action action)
         {
+            if (Instance == null) Initialize();
             while (numThreads >= maxThreads)
             {
                 Thread.Sleep(1);
