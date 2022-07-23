@@ -522,43 +522,81 @@ namespace EP.U3D.LIBRARY.BASE
 
         private static byte[] RGBIV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
 
-        public static string EncryptString(string encryptString, string key)
+        public static string EncryptString(string str, string key = "")
         {
             try
             {
-                byte[] rgbKey = Encoding.UTF8.GetBytes(key);
-                byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
+                byte[] rgb = string.IsNullOrEmpty(key) ? RGBIV : Encoding.UTF8.GetBytes(key);
+                byte[] arr = Encoding.UTF8.GetBytes(str);
                 DESCryptoServiceProvider dcsp = new DESCryptoServiceProvider();
                 MemoryStream ms = new MemoryStream();
-                CryptoStream cs = new CryptoStream(ms, dcsp.CreateEncryptor(rgbKey, RGBIV), CryptoStreamMode.Write);
-                cs.Write(inputByteArray, 0, inputByteArray.Length);
+                CryptoStream cs = new CryptoStream(ms, dcsp.CreateEncryptor(rgb, RGBIV), CryptoStreamMode.Write);
+                cs.Write(arr, 0, arr.Length);
                 cs.FlushFinalBlock();
                 cs.Close();
                 return Convert.ToBase64String(ms.ToArray());
             }
             catch
             {
-                return encryptString;
+                return str;
             }
         }
 
-        public static string DecryptString(string decryptString, string key)
+        public static string DecryptString(string str, string key = "")
         {
             try
             {
-                byte[] rgbKey = Encoding.UTF8.GetBytes(key);
-                byte[] inputByteArray = Convert.FromBase64String(decryptString);
+                byte[] rgb = string.IsNullOrEmpty(key) ? RGBIV : Encoding.UTF8.GetBytes(key);
+                byte[] arr = Convert.FromBase64String(str);
                 DESCryptoServiceProvider dcsp = new DESCryptoServiceProvider();
                 MemoryStream ms = new MemoryStream();
-                CryptoStream cs = new CryptoStream(ms, dcsp.CreateDecryptor(rgbKey, RGBIV), CryptoStreamMode.Write);
-                cs.Write(inputByteArray, 0, inputByteArray.Length);
+                CryptoStream cs = new CryptoStream(ms, dcsp.CreateDecryptor(rgb, RGBIV), CryptoStreamMode.Write);
+                cs.Write(arr, 0, arr.Length);
                 cs.FlushFinalBlock();
                 cs.Close();
                 return Encoding.UTF8.GetString(ms.ToArray());
             }
             catch
             {
-                return decryptString;
+                return str;
+            }
+        }
+
+        public static byte[] EncryptBytes(byte[] src, string key = "")
+        {
+            try
+            {
+                byte[] rgb = string.IsNullOrEmpty(key) ? RGBIV : Encoding.UTF8.GetBytes(key);
+                DESCryptoServiceProvider dcsp = new DESCryptoServiceProvider();
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cs = new CryptoStream(ms, dcsp.CreateEncryptor(rgb, RGBIV), CryptoStreamMode.Write);
+                cs.Write(src, 0, src.Length);
+                cs.FlushFinalBlock();
+                cs.Close();
+                return ms.ToArray();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static byte[] DecryptBytes(byte[] src, string key = "")
+        {
+            try
+            {
+                byte[] rgb = string.IsNullOrEmpty(key) ? RGBIV : Encoding.UTF8.GetBytes(key);
+                DESCryptoServiceProvider dcsp = new DESCryptoServiceProvider();
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cs = new CryptoStream(ms, dcsp.CreateDecryptor(rgb, RGBIV), CryptoStreamMode.Write);
+                cs.Write(src, 0, src.Length);
+                cs.FlushFinalBlock();
+                cs.Close();
+                return ms.ToArray();
+            }
+            catch
+            {
+                return null;
             }
         }
 
