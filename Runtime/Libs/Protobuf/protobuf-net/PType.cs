@@ -62,10 +62,9 @@ namespace ProtoBuf{
 		}
 
 		public static object CreateInstance(Type type){
-			if (Type.GetType (type.FullName) == null) {
-				if (CreateInstanceFunc != null) {
-					return CreateInstanceFunc.Invoke(type.FullName);
-				}
+			if (CreateInstanceFunc != null)
+			{
+				return CreateInstanceFunc.Invoke(type.FullName);
 			}
 			return Activator.CreateInstance (type
 				#if !(CF || SILVERLIGHT || WINRT || PORTABLE || NETSTANDARD1_3 || NETSTANDARD1_4)
