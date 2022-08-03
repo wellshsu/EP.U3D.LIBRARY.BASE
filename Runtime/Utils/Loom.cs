@@ -69,6 +69,12 @@ namespace EP.U3D.LIBRARY.BASE
             Instance.StopCoroutine(cr);
         }
 
+        public static void StopCR(IEnumerator cr)
+        {
+            if (Instance == null) Initialize();
+            Instance.StopCoroutine(cr);
+        }
+
         public static bool IsInMainThread()
         {
             if (Instance == null) Initialize();
